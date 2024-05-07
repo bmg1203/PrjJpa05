@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- html data- 속성 -->
+  <h2 style="color:red" data-commentid="없는 글자">Hell로 월드1</h2>
+  <h2 style="color:red" data-commentid="없는 글자">Hell로 월드2</h2>
+  <p>큰 글자를 클릭하면 배경색이 노란색이 됩니다</p>
+  <script>
+  	//const h2El = document.querySelector('h2')
+  	//예전 문법
+		//const h2Els = document.getElementsByTagName('h2')
+		//요즘 문법
+		const h2Els = document.querySelectorAll('h2')
+		console.dir(h2Els[0])
+		console.log(h2Els[0])
+		//alert(h2El.dataset.commentid)
+		
+		h2Els.forEach((h2El, i) => {
+			h2El.onclick = function(e) {
+				const el = event.target //h2
+				console.dir(e)
+				//alert(el.innerHTML)
+				alert(this.innerHTML) //event.target === this(클릭한 h2)
+				//this.style.backgroundColor = "yellow"
+				this.style['background-color'] = "yellow"
+			}
+		})
+		
+		/* 옛날 문법
+		for(let i = 0; i < h2Els.length; i++) {
+			h2Els[i].addEventListener('click', (e) => {
+				alert(h2Els[i].innerHTML)
+				
+				//e.target.style.backgroundColor = "yellow"
+				//pEl.style.backgroundColor = "yellow"
+				//bEl.style.backgroundColor = "yellow"
+			})
+		}
+  	*/
+	</script>
+</body>
+</html>

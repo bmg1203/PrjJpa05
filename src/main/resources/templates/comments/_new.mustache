@@ -1,0 +1,61 @@
+<div class="card m-2" id="comments-new">
+	<div class="card-body">
+		<!-- 댓글 작성 폼 -->
+		<form action="" method="POST">
+			<!-- hidden 정보 -->
+			{{#article}}
+			<input type="hidden" class="form-control" id="new-comment-articleId" value="{{id}}">
+			{{/article}}
+			<!-- 닉네임 -->
+			<div class="mb-3">
+				<label class="form-label">닉네임</label>
+				<label>
+					<input type="text" class="form-control" id="new-comment-nickname">
+				</label>
+			</div>
+			<!-- 댓글 본문 -->
+			<div class="mb-3">
+				<label class="form-label">댓글 내용</label><br>
+				<label>
+					<textarea class="form-control" id="new-comment-body" rows="3"></textarea>
+				</label>
+			</div>
+			<!-- 전송 버튼 -->
+			<button type="button" class="btn btn-primary" id="comment-create-btn">댓글 작성</button>
+		</form>
+	</div>
+</div>
+
+<!-- 새글 쓰기 -->
+<script>
+	const commentCreateBtnEl = document.getElementById('comment-create-btn')
+
+	commentCreateBtnEl.addEventListener('click', (e) => {
+		//{{id}} : pathVariable - mustache 파일에서도 사용 가능
+		let url = 'http://localhost:9090/api/articles/{{id}}/comments'
+		const comment = {
+			//새 댓글의 닉네임
+			nickname : document.querySelector('#new-comment-nickname').value,
+			//새 댓글의 본문
+			body : document.querySelector('#new-comment-body').value,
+			//새 댓글의 부모 게시글 아이디
+			articleId : document.querySelector('#new-comment-articleId').value
+		}
+		const params = {
+			method : 'POST',
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify(comment)
+		}
+
+		fetch(url, params)
+		.then(response => {
+			//let cid = response.id
+			const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글이 등록되지 않았습니다."
+			alert(msg)
+			//현재 페이지 새로 고침
+			window.location.reload()
+		})
+	})
+</script>
